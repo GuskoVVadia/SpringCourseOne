@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:list id="listSongs">
+        <bean class="#{T(String)}"> <constructor-arg value="1Ala-la-la"/> </bean>
+        <bean class="#{T(String)}"> <constructor-arg value="2Ola-la-la"/> </bean>
+        <bean class="#{T(String)}"> <constructor-arg value="3Bla-la-la"/> </bean>
+    </util:list>
+
+    <bean id="baseSaxophonist" class="Lessons.LessonOne.OptionTwo.Instrumentalist" abstract="true">
+        <property name="song" value="#{listSongs[2]}"/>
+        <property name="instrument" ref="saxophone"/>
+    </bean>
+
+    <bean id="kenny" parent="baseSaxophonist"/>
+    <bean id="david" parent="baseSaxophonist"/>
+    <bean id="frank" parent="baseSaxophonist">
+        <property name="song" value="#{listSongs[0]}"/>
+    </bean>
+
+    <bean id="bestPerformer" abstract="true">
+        <property name="song" value="#{listSongs[2]}"/>
+    </bean>
+
+    <bean id="taylor" parent="bestPerformer" class="Lessons.LessonOne.OptionTwo.Vocalist"/>
+    <bean id="stevie" parent="bestPerformer" class="Lessons.LessonOne.OptionTwo.Instrumentalist">
+        <property name="song" value="#{listSongs[0]}"/>
+        <property name="instrument" ref="saxophone"/>
+    </bean>
+
+
+    <bean id="pianist" class="Lessons.LessonOne.OptionTwo.Instrumentalist">
+        <property name="song" value="la-la-la"/>
+        <property name="instrument" ref="piano"/>
+    </bean>
+
+    <bean id="saxophone" class="Lessons.LessonOne.OptionTwo.Saxophone"/>
+    <bean id="piano" class="Lessons.LessonOne.OptionTwo.Piano"/>
+</beans>
